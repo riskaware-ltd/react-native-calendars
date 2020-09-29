@@ -17,6 +17,7 @@ class Day extends Component {
     theme: PropTypes.object,
     marking: PropTypes.any,
     onPress: PropTypes.func,
+    onPressIn: PropTypes.func,
     onLongPress: PropTypes.func,
     date: PropTypes.object
   };
@@ -27,6 +28,7 @@ class Day extends Component {
     this.style = styleConstructor(props.theme);
 
     this.onDayPress = this.onDayPress.bind(this);
+    this.onDayPressIn = this.onDayPressIn.bind(this);
     this.onDayLongPress = this.onDayLongPress.bind(this);
   }
 
@@ -34,12 +36,16 @@ class Day extends Component {
     this.props.onPress(this.props.date);
   }
 
+  onDayPressIn() {
+    this.props.onPressIn(this.props.date);
+  }
+
   onDayLongPress() {
     this.props.onLongPress(this.props.date);
   }
 
   shouldComponentUpdate(nextProps) {
-    return shouldUpdate(this.props, nextProps, ['state', 'children', 'marking', 'onPress', 'onLongPress']);
+    return shouldUpdate(this.props, nextProps, ['state', 'children', 'marking', 'onPress', 'onPressIn', 'onLongPress']);
   }
 
   renderDots(marking) {
@@ -82,10 +88,12 @@ class Day extends Component {
         testID={this.props.testID}
         style={containerStyle}
         onPress={this.onDayPress}
+        onPressIn={this.onDayPressIn}
         onLongPress={this.onDayLongPress}
         disabled={marking.disableTouchEvent}
         accessibilityRole={isDisabled ? undefined : 'button'}
         accessibilityLabel={this.props.accessibilityLabel}
+        delayPressIn={0}
       >
         <Text allowFontScaling={false} style={textStyle}>{String(this.props.children)}</Text>
         <View style={{flexDirection: 'row'}}>{dot}</View>

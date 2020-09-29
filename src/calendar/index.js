@@ -59,6 +59,8 @@ class Calendar extends Component {
     showSixWeeks: PropTypes.bool,
     /** Handler which gets executed on day press. Default = undefined */
     onDayPress: PropTypes.func,
+    /** Handler which gets executed on day press in . Default = undefined */
+    onDayPressIn: PropTypes.func,
     /** Handler which gets executed on day long press. Default = undefined */
     onDayLongPress: PropTypes.func,
     /** Handler which gets executed when month changes in calendar. Default = undefined */
@@ -119,6 +121,7 @@ class Calendar extends Component {
 
     this.updateMonth = this.updateMonth.bind(this);
     this.pressDay = this.pressDay.bind(this);
+    this.pressDayIn = this.pressDayIn.bind(this);
     this.longPressDay = this.longPressDay.bind(this);
     this.shouldComponentUpdate = shouldComponentUpdate;
   }
@@ -159,6 +162,10 @@ class Calendar extends Component {
 
   pressDay(date) {
     this._handleDayInteraction(date, this.props.onDayPress);
+  }
+
+  pressDayIn(date) {
+    this._handleDayInteraction(date, this.props.onDayPressIn);
   }
 
   longPressDay(date) {
@@ -217,6 +224,7 @@ class Calendar extends Component {
           state={state}
           theme={this.props.theme}
           onPress={this.pressDay}
+          onPressIn={this.pressDayIn}
           onLongPress={this.longPressDay}
           date={dateAsObject}
           marking={this.getDateMarking(day)}
