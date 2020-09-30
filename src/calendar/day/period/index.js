@@ -17,8 +17,8 @@ class Day extends Component {
     // Specify theme properties to override specific styles for calendar parts. Default = {}
     theme: PropTypes.object,
     marking: PropTypes.any,
+    useTouchableWithoutFeedbackDays: PropTypes.bool,
     onPress: PropTypes.func,
-    onPressIn: PropTypes.func,
     onLongPress: PropTypes.func,
     date: PropTypes.object,
     markingExists: PropTypes.bool
@@ -32,16 +32,11 @@ class Day extends Component {
 
     this.markingStyle = this.getDrawingStyle(props.marking || []);
     this.onDayPress = this.onDayPress.bind(this);
-    this.onDayPressIn = this.onDayPressIn.bind(this);
     this.onDayLongPress = this.onDayLongPress.bind(this);
   }
 
   onDayPress() {
     this.props.onPress(this.props.date);
-  }
-
-  onDayPressIn() {
-    this.props.onPressIn(this.props.date);
   }
 
   onDayLongPress() {
@@ -56,7 +51,7 @@ class Day extends Component {
       return true;
     }
 
-    return shouldUpdate(this.props, nextProps, ['state', 'children', 'onPress', 'onPressIn', 'onLongPress']);
+    return shouldUpdate(this.props, nextProps, ['state', 'children', 'onPress', 'onLongPress']);
   }
 
   getDrawingStyle(marking) {
@@ -207,13 +202,11 @@ class Day extends Component {
       <TouchableWithoutFeedback
         testID={this.props.testID}
         onPress={this.onDayPress}
-        onPressIn={this.onDayPressIn}
         onLongPress={this.onDayLongPress}
         disabled={this.props.marking.disableTouchEvent}
         accessible
         accessibilityRole={this.props.marking.disableTouchEvent ? undefined : 'button'}
         accessibilityLabel={this.props.accessibilityLabel}
-        delayPressIn={0}
       >
         <View style={this.style.wrapper}>
           {fillers}

@@ -59,8 +59,6 @@ class Calendar extends Component {
     showSixWeeks: PropTypes.bool,
     /** Handler which gets executed on day press. Default = undefined */
     onDayPress: PropTypes.func,
-    /** Handler which gets executed on day press in . Default = undefined */
-    onDayPressIn: PropTypes.func,
     /** Handler which gets executed on day long press. Default = undefined */
     onDayLongPress: PropTypes.func,
     /** Handler which gets executed when month changes in calendar. Default = undefined */
@@ -104,11 +102,14 @@ class Calendar extends Component {
     /** Allow rendering of a totally custom footer */
     customFooter: PropTypes.any,
     /** Enable the option to swipe between months. Default: false */
-    enableSwipeMonths: PropTypes.bool
+    enableSwipeMonths: PropTypes.bool,
+    /** Which touchable component to use for day selection */
+    useTouchableWithoutFeedbackDays: PropTypes.bool
   };
 
   static defaultProps = {
-    enableSwipeMonths: false
+    enableSwipeMonths: false,
+    useTouchableWithoutFeedbackDays: false
   };
 
   constructor(props) {
@@ -121,7 +122,6 @@ class Calendar extends Component {
 
     this.updateMonth = this.updateMonth.bind(this);
     this.pressDay = this.pressDay.bind(this);
-    this.pressDayIn = this.pressDayIn.bind(this);
     this.longPressDay = this.longPressDay.bind(this);
     this.shouldComponentUpdate = shouldComponentUpdate;
   }
@@ -162,10 +162,6 @@ class Calendar extends Component {
 
   pressDay(date) {
     this._handleDayInteraction(date, this.props.onDayPress);
-  }
-
-  pressDayIn(date) {
-    this._handleDayInteraction(date, this.props.onDayPressIn);
   }
 
   longPressDay(date) {
@@ -221,10 +217,10 @@ class Calendar extends Component {
       <View style={{flex: 1, alignItems: 'center'}} key={id}>
         <DayComp
           testID={`${SELECT_DATE_SLOT}-${dateAsObject.dateString}`}
+          useTouchableWithoutFeedbackDays={this.props.useTouchableWithoutFeedbackDays}
           state={state}
           theme={this.props.theme}
           onPress={this.pressDay}
-          onPressIn={this.pressDayIn}
           onLongPress={this.longPressDay}
           date={dateAsObject}
           marking={this.getDateMarking(day)}

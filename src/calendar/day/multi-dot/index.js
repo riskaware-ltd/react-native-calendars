@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import {shouldUpdate} from '../../../component-updater';
 import styleConstructor from './style';
+import TouchableSelection from '../touchable-selector/index';
 
 
 class Day extends Component {
@@ -16,8 +17,8 @@ class Day extends Component {
     // Specify theme properties to override specific styles for calendar parts. Default = {}
     theme: PropTypes.object,
     marking: PropTypes.any,
+    useTouchableWithoutFeedbackDays: PropTypes.bool,
     onPress: PropTypes.func,
-    onPressIn: PropTypes.func,
     onLongPress: PropTypes.func,
     date: PropTypes.object
   };
@@ -28,7 +29,6 @@ class Day extends Component {
     this.style = styleConstructor(props.theme);
 
     this.onDayPress = this.onDayPress.bind(this);
-    this.onDayPressIn = this.onDayPressIn.bind(this);
     this.onDayLongPress = this.onDayLongPress.bind(this);
   }
 
@@ -36,16 +36,12 @@ class Day extends Component {
     this.props.onPress(this.props.date);
   }
 
-  onDayPressIn() {
-    this.props.onPressIn(this.props.date);
-  }
-
   onDayLongPress() {
     this.props.onLongPress(this.props.date);
   }
 
   shouldComponentUpdate(nextProps) {
-    return shouldUpdate(this.props, nextProps, ['state', 'children', 'marking', 'onPress', 'onPressIn', 'onLongPress']);
+    return shouldUpdate(this.props, nextProps, ['state', 'children', 'marking', 'onPress', 'onLongPress']);
   }
 
   renderDots(marking) {
@@ -84,20 +80,19 @@ class Day extends Component {
     }
     
     return (
-      <TouchableOpacity
+      <TouchableSelection
+        useTouchableWithoutFeedback = {this.props.useTouchableWithoutFeedbackDays} 
         testID={this.props.testID}
         style={containerStyle}
         onPress={this.onDayPress}
-        onPressIn={this.onDayPressIn}
         onLongPress={this.onDayLongPress}
         disabled={marking.disableTouchEvent}
         accessibilityRole={isDisabled ? undefined : 'button'}
         accessibilityLabel={this.props.accessibilityLabel}
-        delayPressIn={0}
       >
         <Text allowFontScaling={false} style={textStyle}>{String(this.props.children)}</Text>
         <View style={{flexDirection: 'row'}}>{dot}</View>
-      </TouchableOpacity>
+      </TouchableSelection>
     );
   }
 }

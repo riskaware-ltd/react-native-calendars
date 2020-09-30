@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {shouldUpdate} from '../../../component-updater';
 import Dot from '../../dot';
 import styleConstructor from './style';
-
+import TouchableSelection from '../touchable-selector/index';
 
 class Day extends Component {
   static displayName = 'IGNORE';
@@ -14,9 +14,9 @@ class Day extends Component {
     state: PropTypes.oneOf(['disabled', 'today', '']),
     // Specify theme properties to override specific styles for calendar parts. Default = {}
     theme: PropTypes.object,
+    useTouchableWithoutFeedbackDays: PropTypes.bool,
     marking: PropTypes.any,
     onPress: PropTypes.func,
-    onPressIn: PropTypes.func,
     onLongPress: PropTypes.func,
     date: PropTypes.object,
     disableAllTouchEventsForDisabledDays: PropTypes.bool
@@ -27,24 +27,18 @@ class Day extends Component {
     this.style = styleConstructor(props.theme);
 
     this.onDayPress = this.onDayPress.bind(this);
-    this.onDayPressIn = this.onDayPressIn.bind(this);
     this.onDayLongPress = this.onDayLongPress.bind(this);
   }
 
   onDayPress() {
     this.props.onPress(this.props.date);
   }
-
-  onDayPressIn() {
-    this.props.onPressIn(this.props.date);
-  }
-
   onDayLongPress() {
     this.props.onLongPress(this.props.date);
   }
 
   shouldComponentUpdate(nextProps) {
-    return shouldUpdate(this.props, nextProps, ['state', 'children', 'marking', 'onPress', 'onPressIn', 'onLongPress']);
+    return shouldUpdate(this.props, nextProps, ['state', 'children', 'marking', 'onPress', 'onLongPress']);
   }
 
   render() {
@@ -99,17 +93,15 @@ class Day extends Component {
     }
 
     return (
-      <TouchableOpacity
-        testID={this.props.testID}
+      <TouchableSelection
+        useTouchableWithoutFeedback = {this.props.useTouchableWithoutFeedbackDays}
         style={containerStyle}
         onPress={this.onDayPress}
-        onPressIn={this.onDayPressIn}
         onLongPress={this.onDayLongPress}
         activeOpacity={activeOpacity}
         disabled={shouldDisableTouchEvent}
         accessibilityRole={isDisabled ? undefined : 'button'}
         accessibilityLabel={this.props.accessibilityLabel}
-        delayPressIn={0}
       >
         <Text allowFontScaling={false} style={textStyle}>{String(this.props.children)}</Text>
         <Dot
@@ -120,7 +112,7 @@ class Day extends Component {
           isToday={isToday}
           isDisabled={isDisabled}
         />
-      </TouchableOpacity>
+      </TouchableSelection>
     );
   }
 }
