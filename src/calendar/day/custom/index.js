@@ -89,9 +89,9 @@ class Day extends Component {
     }
 
     return <TouchableSelection
+        testID={this.props.testID}
         useTouchableWithoutFeedback = {this.props.useTouchableWithoutFeedbackDays} 
         style={containerStyle}
-        testID={this.props.testID}
         onPress={this.onDayPress}
         onLongPress={this.onDayLongPress}
         activeOpacity={marking.activeOpacity}
