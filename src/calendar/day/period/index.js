@@ -17,7 +17,7 @@ class Day extends Component {
     // Specify theme properties to override specific styles for calendar parts. Default = {}
     theme: PropTypes.object,
     marking: PropTypes.any,
-    useTouchableWithoutFeedbackDays: PropTypes.bool,
+    showTouchFeedback: PropTypes.bool,
     onPress: PropTypes.func,
     onLongPress: PropTypes.func,
     date: PropTypes.object,

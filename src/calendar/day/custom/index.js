@@ -16,7 +16,7 @@ class Day extends Component {
     state: PropTypes.oneOf(['selected', 'disabled', 'today', '']),
     // Specify theme properties to override specific styles for calendar parts. Default = {}
     theme: PropTypes.object,
-    useTouchableWithoutFeedbackDays: PropTypes.bool,
+    showTouchFeedback: PropTypes.bool,
     marking: PropTypes.any,
     onPress: PropTypes.func,
     onLongPress: PropTypes.func,
@@ -90,7 +90,7 @@ class Day extends Component {
 
     return <TouchableSelection
         testID={this.props.testID}
-        useTouchableWithoutFeedback = {this.props.useTouchableWithoutFeedbackDays} 
+        showTouchFeedback = {this.props.showTouchFeedback} 
         style={containerStyle}
         onPress={this.onDayPress}
         onLongPress={this.onDayLongPress}

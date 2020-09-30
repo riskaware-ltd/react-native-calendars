@@ -2,22 +2,16 @@ import React, { Component } from 'react';
 import { TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 
 class TouchableSelection extends Component {
-    components = {
-        touchableOpacity: TouchableOpacity,
-        touchableWithoutFeedback: TouchableWithoutFeedback
-    };
     render() {
-        if (!this.props.useTouchableWithoutFeedback) {
-            const TagName = this.components['touchableOpacity'];
-            return <TagName {...this.props} />
+        if (this.props.showTouchFeedback) {
+            return <TouchableOpacity {...this.props} />
         } else {
-            const TagName = this.components['touchableWithoutFeedback'];
             return (
-                <TagName {...this.props}>
+                <TouchableWithoutFeedback {...this.props}>
                     <View style={this.props.style} >
                         {this.props.children}
                     </View>
-                </TagName>
+                </TouchableWithoutFeedback>
             );
         }
     }

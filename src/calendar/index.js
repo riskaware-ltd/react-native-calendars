@@ -103,13 +103,13 @@ class Calendar extends Component {
     customFooter: PropTypes.any,
     /** Enable the option to swipe between months. Default: false */
     enableSwipeMonths: PropTypes.bool,
-    /** Which touchable component to use for day selection */
-    useTouchableWithoutFeedbackDays: PropTypes.bool
+    /** Whether to use touchable feedback for day selection */
+    showTouchFeedback: PropTypes.bool
   };
 
   static defaultProps = {
     enableSwipeMonths: false,
-    useTouchableWithoutFeedbackDays: false
+    showTouchFeedback: true
   };
 
   constructor(props) {
@@ -217,7 +217,7 @@ class Calendar extends Component {
       <View style={{flex: 1, alignItems: 'center'}} key={id}>
         <DayComp
           testID={`${SELECT_DATE_SLOT}-${dateAsObject.dateString}`}
-          useTouchableWithoutFeedbackDays={this.props.useTouchableWithoutFeedbackDays}
+          showTouchFeedback={this.props.showTouchFeedback}
           state={state}
           theme={this.props.theme}
           onPress={this.pressDay}
