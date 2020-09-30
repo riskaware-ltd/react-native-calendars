@@ -102,11 +102,14 @@ class Calendar extends Component {
     /** Allow rendering of a totally custom footer */
     customFooter: PropTypes.any,
     /** Enable the option to swipe between months. Default: false */
-    enableSwipeMonths: PropTypes.bool
+    enableSwipeMonths: PropTypes.bool,
+    /** Whether to use touchable feedback for day selection */
+    showTouchFeedback: PropTypes.bool
   };
 
   static defaultProps = {
-    enableSwipeMonths: false
+    enableSwipeMonths: false,
+    showTouchFeedback: true
   };
 
   constructor(props) {
@@ -214,6 +217,7 @@ class Calendar extends Component {
       <View style={{flex: 1, alignItems: 'center'}} key={id}>
         <DayComp
           testID={`${SELECT_DATE_SLOT}-${dateAsObject.dateString}`}
+          showTouchFeedback={this.props.showTouchFeedback}
           state={state}
           theme={this.props.theme}
           onPress={this.pressDay}

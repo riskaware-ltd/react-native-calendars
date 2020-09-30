@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
-import {TouchableOpacity, Text} from 'react-native';
+import { Text } from 'react-native';
 import PropTypes from 'prop-types';
 import Dot from '../../dot';
 
 import styleConstructor from './style';
 import {shouldUpdate} from '../../../component-updater';
+import TouchableSelection from '../touchable-selector/index';
+
 
 class Day extends Component {
   static displayName = 'IGNORE';
@@ -14,6 +16,7 @@ class Day extends Component {
     state: PropTypes.oneOf(['selected', 'disabled', 'today', '']),
     // Specify theme properties to override specific styles for calendar parts. Default = {}
     theme: PropTypes.object,
+    showTouchFeedback: PropTypes.bool,
     marking: PropTypes.any,
     onPress: PropTypes.func,
     onLongPress: PropTypes.func,
@@ -32,6 +35,7 @@ class Day extends Component {
   onDayPress() {
     this.props.onPress(this.props.date);
   }
+
   onDayLongPress() {
     this.props.onLongPress(this.props.date);
   }
@@ -84,9 +88,9 @@ class Day extends Component {
       }
     }
 
-    return (
-      <TouchableOpacity
+    return <TouchableSelection
         testID={this.props.testID}
+        showTouchFeedback = {this.props.showTouchFeedback} 
         style={containerStyle}
         onPress={this.onDayPress}
         onLongPress={this.onDayLongPress}
@@ -104,8 +108,7 @@ class Day extends Component {
           isToday={isToday}
           isDisabled={isDisabled}
         />
-      </TouchableOpacity>
-    );
+      </TouchableSelection>
   }
 }
 
