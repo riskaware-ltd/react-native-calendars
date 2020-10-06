@@ -104,7 +104,9 @@ class Calendar extends Component {
     /** Enable the option to swipe between months. Default: false */
     enableSwipeMonths: PropTypes.bool,
     /** Whether to use touchable feedback for day selection */
-    showTouchFeedback: PropTypes.bool
+    showTouchFeedback: PropTypes.bool,
+    /** Wraps custom day component in a selectable menu */
+    customMenuWrapper: PropTypes.any
   };
 
   static defaultProps = {
@@ -218,6 +220,7 @@ class Calendar extends Component {
         <DayComp
           testID={`${SELECT_DATE_SLOT}-${dateAsObject.dateString}`}
           showTouchFeedback={this.props.showTouchFeedback}
+          customMenuWrapper={this.props.customMenuWrapper}
           state={state}
           theme={this.props.theme}
           onPress={this.pressDay}
