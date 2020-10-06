@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import { Text } from 'react-native';
+import React, { Component } from 'react';
+import { Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 import Dot from '../../dot';
 
@@ -17,6 +17,7 @@ class Day extends Component {
     // Specify theme properties to override specific styles for calendar parts. Default = {}
     theme: PropTypes.object,
     showTouchFeedback: PropTypes.bool,
+    customMenuWrapper: PropTypes.any,
     marking: PropTypes.any,
     onPress: PropTypes.func,
     onLongPress: PropTypes.func,
@@ -64,8 +65,8 @@ class Day extends Component {
 
     const isDisabled = typeof marking.disabled !== 'undefined' ? marking.disabled : this.props.state === 'disabled';
     const isToday = this.props.state === 'today';
-    
-    if (marking.selected) {
+
+    if (marking.selected && !marking.customStyles) {
       containerStyle.push(this.style.selected);
       textStyle.push(this.style.selectedText);
     } else if (isDisabled) {
@@ -87,28 +88,30 @@ class Day extends Component {
         textStyle.push(styles.text);
       }
     }
-
-    return <TouchableSelection
-        testID={this.props.testID}
-        showTouchFeedback = {this.props.showTouchFeedback} 
-        style={containerStyle}
-        onPress={this.onDayPress}
-        onLongPress={this.onDayLongPress}
-        activeOpacity={marking.activeOpacity}
-        disabled={marking.disableTouchEvent}
-        accessibilityRole={isDisabled ? undefined : 'button'}
-        accessibilityLabel={this.props.accessibilityLabel}
-      >
-        <Text allowFontScaling={false} style={textStyle}>{String(this.props.children)}</Text>
-        <Dot
-          theme={theme}
-          isMarked={marked}
-          dotColor={dotColor}
-          isSelected={selected}
-          isToday={isToday}
-          isDisabled={isDisabled}
-        />
-      </TouchableSelection>
+    
+    return (
+            <TouchableSelection selected={selected} customMenuWrapper = {this.props.customMenuWrapper}
+            testID={this.props.testID}
+            showTouchFeedback={this.props.showTouchFeedback}
+            style={containerStyle}
+            onPress={this.onDayPress}
+            onLongPress={this.onDayLongPress}
+            activeOpacity={marking.activeOpacity}
+            disabled={marking.disableTouchEvent}
+            accessibilityRole={isDisabled ? undefined : 'button'}
+            accessibilityLabel={this.props.accessibilityLabel}
+            >
+             <Text allowFontScaling={false} style={textStyle}>{String(this.props.children)}</Text>
+             <Dot
+               theme={theme}
+               isMarked={marked}
+               dotColor={dotColor}
+               isSelected={selected}
+               isToday={isToday}
+               isDisabled={isDisabled}
+             />
+           </TouchableSelection>
+    );
   }
 }
 
