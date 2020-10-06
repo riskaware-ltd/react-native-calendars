@@ -88,21 +88,9 @@ class Day extends Component {
         textStyle.push(styles.text);
       }
     }
-
-    let renderCustomMenuWrapper = false;
-    if(selected && this.props.customMenuWrapper){
-      debugger;
-      renderCustomMenuWrapper = true;
-      console.log("Rendering custom menu wrapper for date : " + this.props.dateString);
-    }
-
-    const CustomMenuWrapper = this.props.customMenuWrapper;
-
+    
     return (
-      <View>
-        {renderCustomMenuWrapper?
-          <CustomMenuWrapper>
-            <TouchableSelection
+            <TouchableSelection selected={selected} customMenuWrapper = {this.props.customMenuWrapper}
             testID={this.props.testID}
             showTouchFeedback={this.props.showTouchFeedback}
             style={containerStyle}
@@ -123,29 +111,6 @@ class Day extends Component {
                isDisabled={isDisabled}
              />
            </TouchableSelection>
-          </CustomMenuWrapper> :
-            <TouchableSelection
-              testID={this.props.testID}
-              showTouchFeedback={this.props.showTouchFeedback}
-              style={containerStyle}
-              onPress={this.onDayPress}
-              onLongPress={this.onDayLongPress}
-              activeOpacity={marking.activeOpacity}
-              disabled={marking.disableTouchEvent}
-              accessibilityRole={isDisabled ? undefined : 'button'}
-              accessibilityLabel={this.props.accessibilityLabel}
-            >
-              <Text allowFontScaling={false} style={textStyle}>{String(this.props.children)}</Text>
-              <Dot
-                theme={theme}
-                isMarked={marked}
-                dotColor={dotColor}
-                isSelected={selected}
-                isToday={isToday}
-                isDisabled={isDisabled}
-               />
-            </TouchableSelection>}
-       </View>
     );
   }
 }
