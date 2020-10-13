@@ -96,7 +96,7 @@ class Day extends Component {
     }
     return (
       <View style={{alignSelf: 'stretch'}}>
-        <TouchableSelection 
+        <TouchableSelection selected={selected} customMenuWrapper = {this.props.customMenuWrapper}
           showTouchFeedback = {this.props.showTouchFeedback} 
           testID={this.props.testID} 
           style={containerStyle} 
