@@ -80,7 +80,7 @@ class Day extends Component {
     }
     
     return (
-      <TouchableSelection
+      <TouchableSelection selected={selected} customMenuWrapper = {this.props.customMenuWrapper}
         showTouchFeedback = {this.props.showTouchFeedback} 
         testID={this.props.testID}
         style={containerStyle}

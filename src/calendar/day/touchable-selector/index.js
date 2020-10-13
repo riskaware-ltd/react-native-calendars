@@ -4,37 +4,23 @@ import { TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 class TouchableSelection extends Component {
     render() {
         const CustomMenuWrapper = this.props.customMenuWrapper;
+        const TouchableClass = this.props.showTouchFeedback ? TouchableOpacity : ((props) => 
+            <TouchableWithoutFeedback {...props}>
+                <View style={props.style} >
+                    {props.children}
+                </View>
+            </TouchableWithoutFeedback>
+        );
 
-        if (this.props.showTouchFeedback) {
-            if(this.props.selected && this.props.customMenuWrapper){
-                return (
-                    <CustomMenuWrapper>
-                        <TouchableOpacity {...this.props} />
-                    </CustomMenuWrapper>
-                );
-            } 
-
-            return <TouchableOpacity {...this.props} />       
-        } else {
-            if(this.props.selected && this.props.customMenuWrapper){
-                return (
-                <CustomMenuWrapper>
-                  <TouchableWithoutFeedback {...this.props}>
-                    <View style={this.props.style} >
-                        {this.props.children}
-                    </View>
-                  </TouchableWithoutFeedback>
-                </CustomMenuWrapper>
-                );
-            } 
+        if(this.props.selected && this.props.customMenuWrapper){
             return (
-                <TouchableWithoutFeedback {...this.props}>
-                    <View style={this.props.style} >
-                        {this.props.children}
-                    </View>
-                </TouchableWithoutFeedback>
+                <CustomMenuWrapper>
+                    <TouchableClass {...this.props} />
+                </CustomMenuWrapper>
             );
-        }
+        } 
+
+        return <TouchableClass {...this.props} />       
     }
 }
 export default TouchableSelection;
