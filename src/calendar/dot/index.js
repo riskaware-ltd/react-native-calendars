@@ -3,7 +3,7 @@ import {View} from 'react-native';
 import styleConstructor from './style';
 import PropTypes from 'prop-types';
 
-const Dot = ({theme, isMarked, isDisabled, dotColor, isToday, isSelected}) => {
+const Dot = ({theme, isMarked, isDisabled, dotColor, isToday, isSelected, customDotComponent}) => {
 
   const style = styleConstructor(theme);
   const dotStyle = [style.dot];
@@ -29,7 +29,9 @@ const Dot = ({theme, isMarked, isDisabled, dotColor, isToday, isSelected}) => {
   }
 
   return (
-    <View style={dotStyle}/>
+    <>
+      {customDotComponent ? customDotComponent : <View style={dotStyle} /> }
+    </>
   );
 };
 
