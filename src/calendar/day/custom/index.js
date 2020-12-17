@@ -21,7 +21,8 @@ class Day extends Component {
     marking: PropTypes.any,
     onPress: PropTypes.func,
     onLongPress: PropTypes.func,
-    date: PropTypes.object
+    date: PropTypes.object,
+    customDotComponent : PropTypes.any
   };
 
   constructor(props) {
@@ -60,7 +61,8 @@ class Day extends Component {
     const {
       marked,
       dotColor,
-      selected
+      selected,
+      customDotComponent
     } = marking;
 
     const isDisabled = typeof marking.disabled !== 'undefined' ? marking.disabled : this.props.state === 'disabled';
@@ -109,6 +111,7 @@ class Day extends Component {
                isSelected={selected}
                isToday={isToday}
                isDisabled={isDisabled}
+               customDotComponent={customDotComponent}
              />
            </TouchableSelection>
     );
